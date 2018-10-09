@@ -2,18 +2,18 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY3RoMTAxMSIsImEiOiJjam1zeGxieXcwanVtM3dwOGM2M
 var afterMap = new mapboxgl.Map({
     container: 'after',
     style: 'mapbox://styles/mapbox/dark-v9',
-    center: [121.059359,14.550999],
+    center: [120.983811,14.55768],
     zoom: 14
 });
 afterMap.on('load', function() {
 
   afterMap.addSource('jams', {
       "type": "geojson",
-      "data": "https://cdn.rawgit.com/cth1011/mapbox/ea5ae720/jams_after_p1.geojson"
+      "data": "https://cdn.rawgit.com/cth1011/mapbox/41dba205/SM%20data/jams-2018-10-06.geojson"
   });
-  var geojson = afterMap.addSource('alerts', {
+  afterMap.addSource('alerts', {
       "type": "geojson",
-      "data": "https://rawgit.com/cth1011/mapbox/master/alerts_after.geojson"
+      "data": "https://cdn.rawgit.com/cth1011/mapbox/41dba205/SM%20data/alerts-2018-10-06.geojson"
   });
 
     afterMap.addLayer({
@@ -28,15 +28,17 @@ afterMap.on('load', function() {
                 "type": "exponential",
                 "stops": [
                     [1, 0],
-                    [1000, 1]
+                    [500, 1],
+                    [1000,2],
+                    [1500,3]
                 ]
             },
           // increase intensity as zoom level increases
             "heatmap-intensity": {
                 "stops": [
                     [9, 0],
-                    [10, 1],
-                    [15, 2]
+                    [10, 2],
+                    [15, 3]
                 ]
             },
           // use sequential color palette to use exponentially as the weight increases
@@ -44,9 +46,10 @@ afterMap.on('load', function() {
                 "interpolate",
                 ["linear"],
                 ["heatmap-density"],
-                0, "rgba(236,222,239,0)",
-                0.5, "rgb(243, 92, 99)",
-                1.0, "rgba(195, 33, 51, 0.8)"
+                0, "rgba(47,174,192,0)",
+                0.25, "rgb(47,174,192)",
+                0.5, "rgb(251, 212, 72)",
+                1.0, "rgba(233, 74, 47, 0.8)"
             ],
             // increase radius as zoom increases
             "heatmap-radius": {
@@ -66,47 +69,6 @@ afterMap.on('load', function() {
         }
     }, 'waterway-label');
 
-   afterMap.addLayer({
-        "id": "alerts-marker",
-        "type": "circle",
-        "source": "alerts",
-        "minzoom": 14,
-        "paint": {
-          // increase the radius of the circle as the zoom level and dbh value increases
-            "circle-radius": {
-                "property": "reliabilit",
-                "type": "exponential",
-                "stops": [
-                    [{ zoom: 15, value: 1 }, 5],
-                    [{ zoom: 15, value: 62 }, 10],
-                    [{ zoom: 22, value: 1 }, 20],
-                    [{ zoom: 22, value: 62 }, 50],
-                ]
-            },
-            "circle-color": {
-                "property": "reliabilit",
-                "type": "exponential",
-                "stops": [
-                  [0, "rgba(236,222,239,0)"],
-                  [3, "rgb(236,222,239)"],
-                  [4, "rgb(208,209,230)"],
-                  [5, "rgb(166,189,219)"],
-                  [6, "rgb(103,169,207)"],
-                  [7, "rgb(28,144,153)"],
-                  [10, "rgb(1,108,89)"]
-                ]
-            },
-            "circle-stroke-color": "white",
-            "circle-stroke-width": 1,
-            "circle-opacity": {
-                "stops": [
-                    [14, 0],
-                    [15, 1]
-                ]
-            }
-        }
-
-    }, 'waterway-label');
 
         filter: ['==',['number',['get', 'hour']],12]
 });
@@ -114,18 +76,18 @@ afterMap.on('load', function() {
 var beforeMap = new mapboxgl.Map({
     container: 'before',
     style: 'mapbox://styles/mapbox/light-v9',
-    center: [121.059359,14.550999],
+    center: [120.983811,14.55768],
     zoom: 14
 });
 beforeMap.on('load', function() {
 
   beforeMap.addSource('jams-before', {
       "type": "geojson",
-      "data": "https://cdn.rawgit.com/cth1011/mapbox/ea5ae720/jams_before_p1.geojson"
+      "data": "https://cdn.rawgit.com/cth1011/mapbox/41dba205/SM%20data/jams-2018-09-29.geojson"
   });
   var geojson = beforeMap.addSource('alerts-before', {
       "type": "geojson",
-      "data": "https://cdn.rawgit.com/cth1011/mapbox/ea5ae720/alerts_before.geojson"
+      "data": "https://cdn.rawgit.com/cth1011/mapbox/41dba205/SM%20data/alerts-2018-09-29.geojson"
   });
 
     beforeMap.addLayer({
@@ -139,16 +101,18 @@ beforeMap.on('load', function() {
                 "property": "delay",
                 "type": "exponential",
                 "stops": [
-                    [1, 0],
-                    [1000, 1]
+                  [1, 0],
+                  [500, 1],
+                  [1000,2],
+                  [1500,3]
                 ]
             },
           // increase intensity as zoom level increases
             "heatmap-intensity": {
                 "stops": [
-                    [9, 0],
-                    [10, 1],
-                    [15, 2]
+                  [9, 0],
+                  [10, 2],
+                  [15, 3]
                 ]
             },
           // use sequential color palette to use exponentially as the weight increases
@@ -156,9 +120,10 @@ beforeMap.on('load', function() {
                 "interpolate",
                 ["linear"],
                 ["heatmap-density"],
-                0, "rgba(236,222,239,0)",
-                0.5, "rgb(243, 92, 99)",
-                1.0, "rgba(195, 33, 51, 0.8)"
+                0, "rgba(47,174,192,0)",
+                0.25, "rgb(47,174,192)",
+                0.5, "rgb(251, 212, 72)",
+                1.0, "rgba(233, 74, 47, 0.8)"
             ],
             // increase radius as zoom increases
             "heatmap-radius": {
@@ -178,48 +143,6 @@ beforeMap.on('load', function() {
         }
     }, 'waterway-label');
 
-   beforeMap.addLayer({
-        "id": "alerts-marker-before",
-        "type": "circle",
-        "source": "alerts-before",
-        "minzoom": 14,
-        "paint": {
-          // increase the radius of the circle as the zoom level and dbh value increases
-            "circle-radius": {
-                "property": "reliabilit",
-                "type": "exponential",
-                "stops": [
-                    [{ zoom: 15, value: 1 }, 5],
-                    [{ zoom: 15, value: 62 }, 10],
-                    [{ zoom: 22, value: 1 }, 20],
-                    [{ zoom: 22, value: 62 }, 50],
-                ]
-            },
-            "circle-color": {
-                "property": "reliabilit",
-                "type": "exponential",
-                "stops": [
-                  [0, "rgba(236,222,239,0)"],
-                  [3, "rgb(236,222,239)"],
-                  [4, "rgb(208,209,230)"],
-                  [5, "rgb(166,189,219)"],
-                  [6, "rgb(103,169,207)"],
-                  [7, "rgb(28,144,153)"],
-                  [10, "rgb(1,108,89)"]
-                ]
-            },
-            "circle-stroke-color": "white",
-            "circle-stroke-width": 1,
-            "circle-opacity": {
-                "stops": [
-                    [14, 0],
-                    [15, 1]
-                ]
-            }
-        }
-
-    }, 'waterway-label');
-
         filter: ['==',['number',['get', 'hour']],12]
 });
 var map = new mapboxgl.Compare(beforeMap, afterMap, {
@@ -227,13 +150,15 @@ var map = new mapboxgl.Compare(beforeMap, afterMap, {
     // mousemove: true
 
 });
+
+// TIME SLIDER
 document.getElementById('slider').addEventListener('input', function(e) {
   var hour = parseInt(e.target.value);
   // update the map
-  afterMap.setFilter('alerts-marker', ['==', ['number', ['get', 'hour']], hour]);
-  afterMap.setFilter('jams-heat', ['==', ['number', ['get', 'hour']], hour]);
-  beforeMap.setFilter('alerts-marker-before', ['==', ['number', ['get', 'hour']], hour]);
-  beforeMap.setFilter('jams-heat-before', ['==', ['number', ['get', 'hour']], hour]);
+  afterMap.setFilter('alerts-marker', ['==', ['number', ['get', 'MANILA_HOUR']], hour]);
+  afterMap.setFilter('jams-heat', ['==', ['number', ['get', 'MANILA_HOUR']], hour]);
+  beforeMap.setFilter('alerts-marker-before', ['==', ['number', ['get', 'MANILA_HOUR']], hour]);
+  beforeMap.setFilter('jams-heat-before', ['==', ['number', ['get', 'MANILA_HOUR']], hour]);
 
   // converting 0-23 hour to AMPM format
   var ampm = hour >= 12 ? 'PM' : 'AM';
@@ -244,7 +169,7 @@ document.getElementById('slider').addEventListener('input', function(e) {
 });
 
 //click on tree to view dbh in a popup
-map.on('click', 'alerts-marker', function (e) {
+afterMap.on('click', 'alerts-marker', function (e) {
   new mapboxgl.Popup()
     .setLngLat(e.features[0].geometry.coordinates)
     .setHTML('<b>Type:</b> '+ e.features[0].properties.type)
