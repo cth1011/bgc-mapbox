@@ -32,9 +32,9 @@
   </div>
 </div>
 
-  <div class='container-fluid'>
+  <div class='container-fluid '>
     <div class='row'>
-      <div class='col-xl-4'>
+      <div class='col-xl-4 left'>
         <div class='row header'>
           <div class='col-lg-2' style='padding-top:1vh;margin-left:1vh;'>Period</div>
           <div class='col-lg-2'>
@@ -115,24 +115,35 @@
     </tbody>
       </table>
       </div>
-      <div class='col-xl-8 maps'>
+
+      <div class='col-xl-12 maps'>
         <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
         <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
         <div id='before' class='content'></div>
         <div id='after' class='content'></div>
+        <a><img class='fullscreen' src='./assets/full.png'></a>
+        <div class='legend'>
+          Delay Time
+          <div class='row colors'></div>
+          <div class='row labels'>
+            <div class='label'>Light</div>
+            <div class='label'>Moderate</div>
+            <div class='label'>Heavy</div>
+          </div>
+        </div>
+        <div class='caption'>
+          <div class='session' id='sliderbar'>
+
+            <i class="fas fa-clock"></i> Hour: <label id='active-hour'>Select Time</label>
+            <div class='slidecontainer'><input id='slider' class='slider' type='range' min = '0' max = '23' step='1' value='12'/></div>
+        </div>
+      </div>
       </div>
     </div>
   </div>
-  <div id='console'>
-    <div class='caption'>
-    <h1><i class="fas fa-female"></i>Time Analysis</h1>
-    <p>Waze Data: BGC is Laifu</p>
-    <div class='session' id='sliderbar'>
-      <h2><i class="fas fa-clock"></i> Hour: <label id='active-hour'>12PM</label></h2>
-      <div class='slidecontainer'><input id='slider' class='slider' type='range' min = '0' max = '23' step='1' value='12'/></div>
-    </div>
-  </div>
-  </div>
+
+
+
 
 <script src="./assets/mapbox.js">
 </script>
