@@ -2,7 +2,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY3RoMTAxMSIsImEiOiJjam1zeGxieXcwanVtM3dwOGM2M
 var afterMap = new mapboxgl.Map({
     container: 'after',
     style: 'mapbox://styles/mapbox/dark-v9',
-    center: [120.983811,14.55768],
+    center: [121.0503,14.5489],
     zoom: 14
 });
 afterMap.on('load', function() {
@@ -19,7 +19,11 @@ afterMap.on('load', function() {
     afterMap.addLayer({
         "id": "jams-heat",
         "type": "heatmap",
-        "source": "jams",
+        "source": {
+          type: "vector",
+          url: "mapbox://cth1011.cjn435zyq02m62qmlylhsgr66-7frzy"
+        },
+        'source-layer': '2018-09-21',
         "maxzoom": 16,
         "paint": {
           // increase weight as diameter breast height increases
@@ -66,17 +70,28 @@ afterMap.on('load', function() {
                     [20, 1]
                 ]
             },
-        }
+        },
+          "filter": ['==',['number',['get', 'hour']],12]
     }, 'waterway-label');
-
-
-        filter: ['==',['number',['get', 'hour']],12]
+    afterMap.addLayer({
+      "id": "symbo",
+      "type": "symbol",
+      "source":{
+        type: "vector",
+        url: "mapbox://cth1011.cjn435zyq02m62qmlylhsgr66-7frzy"
+      },
+      'source-layer': '2018-09-21',
+      "layout": {
+        "icon-image": "alert-15",
+        "icon-allow-overlap":true
+      },
+    });
 });
-
+//BEFORE MAP
 var beforeMap = new mapboxgl.Map({
     container: 'before',
     style: 'mapbox://styles/mapbox/light-v9',
-    center: [120.983811,14.55768],
+    center: [121.0503,14.5489],
     zoom: 14
 });
 beforeMap.on('load', function() {
@@ -93,7 +108,11 @@ beforeMap.on('load', function() {
     beforeMap.addLayer({
         "id": "jams-heat-before",
         "type": "heatmap",
-        "source": "jams-before",
+        "source": {
+          type: "vector",
+          url: "mapbox://cth1011.cjn44esq006tq31s03ujx5fnj-0cfmx"
+        },
+        'source-layer': 'jams2018-09-14',
         "maxzoom": 16,
         "paint": {
           // increase weight as diameter breast height increases
@@ -140,25 +159,25 @@ beforeMap.on('load', function() {
                     [20, 1]
                 ]
             },
-        }
+        },
+        "filter": ['==',['number',['get', 'hour']],12]
     }, 'waterway-label');
 
-        filter: ['==',['number',['get', 'hour']],12]
+
 });
 var map = new mapboxgl.Compare(beforeMap, afterMap, {
     // Set this to enable comparing two maps by mouse movement:
     // mousemove: true
 
 });
-
 // TIME SLIDER
 document.getElementById('slider').addEventListener('input', function(e) {
   var hour = parseInt(e.target.value);
   // update the map
-  afterMap.setFilter('alerts-marker', ['==', ['number', ['get', 'MANILA_HOUR']], hour]);
-  afterMap.setFilter('jams-heat', ['==', ['number', ['get', 'MANILA_HOUR']], hour]);
-  beforeMap.setFilter('alerts-marker-before', ['==', ['number', ['get', 'MANILA_HOUR']], hour]);
-  beforeMap.setFilter('jams-heat-before', ['==', ['number', ['get', 'MANILA_HOUR']], hour]);
+  afterMap.setFilter('alerts-marker', ['==', ['number', ['get', 'hour']], hour]);
+  afterMap.setFilter('jams-heat', ['==', ['number', ['get', 'hour']], hour]);
+  beforeMap.setFilter('alerts-marker-before', ['==', ['number', ['get', 'hour']], hour]);
+  beforeMap.setFilter('jams-heat-before', ['==', ['number', ['get', 'hour']], hour]);
 
   // converting 0-23 hour to AMPM format
   var ampm = hour >= 12 ? 'PM' : 'AM';
@@ -173,5 +192,5 @@ afterMap.on('click', 'alerts-marker', function (e) {
   new mapboxgl.Popup()
     .setLngLat(e.features[0].geometry.coordinates)
     .setHTML('<b>Type:</b> '+ e.features[0].properties.type)
-    .addTo(map);
+    .addTo(afterMap);
 });
