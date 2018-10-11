@@ -21,8 +21,8 @@
 
 <div class= "container-fluid navbar">
   <div class='col-xl-6'>
-    <div class='row'><img class='tm-logo' src='./assets/tm.png'></div>
-    <div class="row navbar-brand">Traffic Dashboard</div>
+    <div class='row'><img class='tm-logo' src='./assets/logo.png'><h2 class='title'>Traffic Dashboard</h2></div>
+
   </div>
   <div class='col-xl-3'>
 
@@ -116,12 +116,15 @@
       </table>
       </div>
 
-      <div class='col-xl-12 maps'>
+      <div class='' id='maps'>
         <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
         <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
         <div id='before' class='content'></div>
+
         <div id='after' class='content'></div>
-        <a><img class='fullscreen' src='./assets/full.png'></a>
+        <div id='period1'>Sept 14, 2018 (Fri)</div>
+        <div id='period2'>Sept 21, 2018 (Fri)</div>
+        <img class='fullscreen' src='./assets/full.png'>
         <div class='legend'>
           Delay Time
           <div class='row colors'></div>
@@ -134,7 +137,7 @@
         <div class='caption'>
           <div class='session' id='sliderbar'>
 
-            <i class="fas fa-clock"></i> Hour: <label id='active-hour'>Select Time</label>
+            <i class="fas fa-clock"></i> Hour: <label id='active-hour'>12PM</label>
             <div class='slidecontainer'><input id='slider' class='slider' type='range' min = '0' max = '23' step='1' value='12'/></div>
         </div>
       </div>
@@ -147,6 +150,7 @@
 
 <script src="./assets/mapbox.js">
 </script>
-
+<script src="./functions.js">
+</script>
 </body>
 </html>
